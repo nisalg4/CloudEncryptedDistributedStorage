@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<!--
+	Spatial by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+
+<head>
+	<title>Clouds And Moon</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+</head>
+
+<body onload="load()">
+
+	<!-- Header -->
+	<header id="header">
+		<h1><strong><a href="index.html">Clouds And Moon</a></strong></h1>
+		<nav id="nav">
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="CloudE-DFS.html">Cloud E-DFS</a></li>
+				<li><a href="cloudSQL.html">Multi-Cloud DB</a></li>
+				<li><a href="contactus.html">Contact Us</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<a href="#menu" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+
+	<!-- Main -->
+	<section id="main" class="wrapper">
+		<div class="container">
+			<header class="major special">
+				<h2>Cloud Encrypted DFS !</h2>
+				<p>jknfkwbefwkjebwkejb</p>
+			</header>
+
+			<!-- Text -->
+			<section>
+
+
+				<h3>Talk to us through email !</h3>
+				<p>This is our email address : <b>nisalg4@gmail.com</b></p>
+
+				<hr />
+			</section>
+
+			<form method="POST" action="upload-profile-pic" enctype="multipart/form-data">
+				<div>
+					<label>Select a file:</label>
+					<input type="file" name="profile_pic" />
+				</div>
+				<div>
+					<input type="submit" name="btn_upload_profile_pic" class="button special big" value="Upload" />
+				</div>
+			</form>
+
+			<h1>Downloadable Files</h1>
+			<h1 id="DowloadableFiles"> </h1>
+		</div>
+
+
+	</section>
+
+
+
+
+
+
+
+
+	<!-- Footer -->
+	<footer id="footer">
+		<div class="container">
+			<ul class="icons">
+				<li><a href="https://www.facebook.com/CloudsAndMoon" class="icon fa-facebook"></a></li>
+			</ul>
+
+			<ul class="copyright">
+				<li>&copy; CLOUDSANDMOON</li>
+
+			</ul>
+		</div>
+	</footer>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/skel.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+
+
+
+	<script>
+
+		function load() {
+			//post get request
+			var urlenc2 = 'https://cloudsandmoon.com/records';
+			body = {};
+			body.key = "secret";
+			var json = JSON.stringify(body);
+			var http = new XMLHttpRequest();
+			console.log(urlenc2 + body);
+			http.open("POST", urlenc2 + "?" + body, true);
+			http.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+			http.onreadystatechange = function () {
+				if (http.readyState === 4) {
+
+
+					console.log(http.responseText);
+
+					var data = http.responseText;
+					var jsonResponse = JSON.parse(data);
+
+					for (var i = 0; i < jsonResponse.length; i++) {
+
+						add(jsonResponse[i]["name"], jsonResponse[i]["fileSize"]);
+
+					}
+
+
+
+
+				}
+			};
+			http.send(json);
+
+
+
+		}
+
+
+
+
+		function add(name, size) {
+			//Create an input type dynamically.   
+			var element = document.createElement("button");
+			//Assign different attributes to the element. 
+			var sizeconverted = formatBytes(size);
+			element.type = name;
+			element.value = name; // Really? You want the default value to be the type string?
+			element.name = name; // And the name too?
+			element.class = "button special big";
+			element.innerHTML = name + "&nbsp(" + sizeconverted + ")";
+			element.onclick = function () { // Note this is a function
+				//alert("blabla");
+
+				var urlenc2 = 'https://cloudsandmoon.com/clientDownload';
+				body = {};
+				body.filename = element.name;
+				body.pass = "aa";
+				var json = JSON.stringify(body);
+				var http = new XMLHttpRequest();
+				console.log(urlenc2 + body);
+				http.open("POST", urlenc2 + "?" + body, true);
+				http.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+				http.onreadystatechange = function () {
+					if (http.readyState === 4) {
+
+						//to be filled after backend
+
+						console.log(http.responseText);
+
+						var jsonRes = JSON.parse(http.responseText);
+						console.log(jsonRes["link"]);
+						window.open(jsonRes["link"]);
+
+
+
+					}
+				};
+				http.send(json);
+
+
+
+
+
+
+
+			};
+
+			var foo = document.getElementById("DowloadableFiles");
+			//Append the element in page (in span).  
+			foo.appendChild(element);
+
+			var linebreak = document.createElement('br');
+			foo.appendChild(linebreak);
+		}
+
+		function formatBytes(bytes) {
+			var decimals = 2;
+			if (bytes === 0) return '0 Bytes';
+
+			const k = 1024;
+			const dm = decimals < 0 ? 0 : decimals;
+			const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+			const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+			return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+		}
+
+
+
+
+	</script>
+
+
+
+
+</body>
+
+</html>
